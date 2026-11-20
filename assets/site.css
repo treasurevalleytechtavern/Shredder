@@ -327,6 +327,10 @@ h2 { font-size: 1.65rem; }
 .detail-section address { margin-bottom: .5rem; }
 .artist-links { display: flex; flex-wrap: wrap; gap: .5rem 1.5rem; padding: 0; margin: 0; list-style: none; }
 .artist-links a { display: inline-flex; align-items: center; min-height: 44px; }
+.artist-links li { display: flex; flex-wrap: wrap; align-items: center; column-gap: .6rem; }
+.spotify-artist-link { gap: .35rem; }
+.artist-links .spotify-artist-link { color: var(--muted); font-size: .875rem; }
+.artist-links .spotify-artist-link:hover { color: var(--accent); }
 #listen { scroll-margin-top: 1.25rem; }
 .spotify-tracks ul {
   display: grid;
@@ -338,7 +342,7 @@ h2 { font-size: 1.65rem; }
   list-style: none;
 }
 .spotify-tracks li { min-width: 0; max-width: 525px; border: 1px solid var(--line); border-radius: 4px; background: var(--panel); }
-.spotify-track { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; column-gap: .85rem; padding: .06rem .75rem; }
+.spotify-track { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; min-height: 46px; column-gap: .85rem; padding: .06rem .75rem; }
 .spotify-track h3 { padding-block: .38rem; font-size: 1.15rem; overflow-wrap: anywhere; }
 .spotify-track a { display: inline-flex; align-items: center; min-height: 44px; color: var(--muted); font-size: .875rem; }
 .spotify-track a:hover { color: var(--accent); }
