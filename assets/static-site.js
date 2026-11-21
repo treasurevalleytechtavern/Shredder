@@ -1,6 +1,6 @@
 import records from './shows-data.js';
 import { browse, dateTime, showState, upcomingPreview } from '../lib/shows.js';
-import { showActions, showBackLink, showControls, showResults, venueShowCards } from '../lib/views.js';
+import { moreShowCards, showActions, showBackLink, showControls, showResults, venueShowCards } from '../lib/views.js';
 import { staticPaths } from '../lib/static-paths.js';
 
 const root = new URL('../', import.meta.url).pathname;
@@ -37,6 +37,10 @@ export function hydrateStaticPage(page) {
   }
 
   const show = shows.find(({ slug }) => slug === page.slug);
+  const moreShows = document.querySelector('.more-shows');
+  if (moreShows) {
+    moreShows.outerHTML = render(moreShowCards(upcomingPreview(shows, now, { limit: 4, excludeSlug: page.slug })));
+  }
   if (show && showState(show, now) === 'completed' && page.state !== 'completed') {
     document.querySelector('.detail-actions .actions').outerHTML = render(showActions(show, 'completed', false));
     document.querySelector('.back-link').outerHTML = render(showBackLink('completed'));

@@ -204,7 +204,6 @@ h2 { font-size: 1.65rem; }
 }
 .show-card:hover, .show-card:target { border-color: #79716a; }
 .show-card { scroll-margin-top: 1rem; }
-.show-visual { display: flex; align-items: stretch; gap: .7rem; }
 .date-stamp {
   display: flex;
   flex-direction: column;
@@ -229,8 +228,8 @@ h2 { font-size: 1.65rem; }
 .with { color: var(--muted); }
 .credit { margin-top: .65rem; color: var(--muted); font-size: .875rem; }
 .show-meta { display: flex; flex-wrap: wrap; align-items: center; gap: .15rem .8rem; margin-top: .25rem; color: var(--muted); font-size: .875rem; }
-.card-listen { display: inline-flex; align-items: center; gap: .28rem; min-height: 32px; color: var(--text); font-weight: 700; }
-.card-listen svg { color: var(--accent); }
+.card-link { display: inline-flex; align-items: center; gap: .28rem; min-height: 32px; color: var(--text); font-weight: 700; }
+.card-link svg { color: var(--accent); }
 .facts { display: flex; flex-wrap: wrap; gap: .35rem 1rem; margin: .7rem 0 0; }
 .facts > div { display: flex; flex-wrap: wrap; gap: 0 .38rem; }
 .facts dt { color: var(--muted); font-size: .875rem; }
@@ -258,8 +257,24 @@ h2 { font-size: 1.65rem; }
 .secondary { border-color: #625b56; background: #191818; color: var(--text); }
 .secondary:hover { border-color: #989089; background: #292626; color: var(--text); }
 .ticket-state { color: var(--muted); background: #101010; border-color: #393532; }
-.flyer { display: grid; width: 106px; min-height: 124px; place-items: center; background: #101010; }
-.flyer img { width: 100%; height: 100%; max-height: 170px; object-fit: contain; }
+.flyer-preview {
+  width: min(42rem, calc(100% - 1.25rem));
+  max-height: calc(100dvh - 1.25rem);
+  padding: 0;
+  border: 1px solid #625b56;
+  border-top: 3px solid var(--red);
+  border-radius: 4px;
+  overflow: auto;
+  overscroll-behavior: contain;
+  background: var(--panel);
+  color: var(--text);
+}
+.flyer-preview::backdrop { background: rgb(0 0 0 / 82%); }
+body:has(.flyer-preview[open]) { overflow: hidden; }
+.flyer-preview-content { padding: .75rem; }
+.flyer-preview-heading { display: flex; align-items: center; justify-content: space-between; gap: .75rem; margin-bottom: .6rem; }
+.flyer-preview-heading h2 { font-size: clamp(1.15rem, 4vw, 1.65rem); overflow-wrap: anywhere; }
+.flyer-preview img { width: 100%; max-height: max(8rem, calc(100dvh - 9rem)); object-fit: contain; background: #101010; }
 .pagination, .listing-footer { display: flex; align-items: center; justify-content: center; gap: 1rem; margin-top: 1.45rem; }
 .pagination span { color: var(--muted); font-size: .875rem; }
 .listing-footer a { font-size: .875rem; font-weight: 750; text-transform: uppercase; letter-spacing: .05em; }
@@ -315,8 +330,8 @@ h2 { font-size: 1.65rem; }
     url("patio.webp") center 44% / cover no-repeat;
 }
 .detail-top.has-venue-photo .detail-info { width: min(100%, 64%); }
-.detail-visual .flyer { width: clamp(170px, 28vw, 325px); }
-.detail-visual .flyer img { max-height: none; }
+.detail-visual { flex: none; width: clamp(170px, 28vw, 325px); }
+.detail-visual img { width: 100%; height: auto; }
 .detail-info { min-width: 0; }
 .detail h1, .page-heading h1:last-child:first-child { font-size: clamp(2.25rem, 6vw, 5rem); overflow-wrap: anywhere; }
 .detail-info .facts { margin-top: 1rem; }
@@ -325,28 +340,39 @@ h2 { font-size: 1.65rem; }
 .detail-section { margin-top: 1.6rem; padding-top: 1.35rem; border-top: 1px solid var(--line); }
 .detail-section h2, .venue-panel h2 { margin-bottom: .65rem; }
 .detail-section address { margin-bottom: .5rem; }
+.show-description { max-width: 72ch; white-space: pre-line; overflow-wrap: anywhere; }
+.show-description p + p { margin-top: .85rem; }
+.more-shows { margin-top: 2.2rem; }
+.more-shows-heading { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0 1rem; margin-bottom: .65rem; }
+.more-shows-heading h2 { margin: 0; }
+.more-shows-heading a { display: inline-flex; align-items: center; gap: .25rem; min-height: 44px; font-size: .875rem; font-weight: 750; }
+.more-shows-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: .75rem; padding: 0; margin: 0; list-style: none; }
+.more-show-card { display: block; height: 100%; padding: .8rem .9rem .95rem; border: 1px solid var(--line); border-top: 2px solid var(--red); border-radius: 3px; background: var(--panel); text-decoration: none; overflow-wrap: anywhere; }
+.more-show-card:hover { border-color: var(--accent); }
+.more-show-card h3 { margin-top: .38rem; font-size: clamp(1.2rem, 2.1vw, 1.65rem); }
+.more-show-date { color: var(--accent); font-size: .8rem; font-weight: 750; }
+.more-show-card .lineup { font-size: .875rem; }
 .artist-links { display: flex; flex-wrap: wrap; gap: .5rem 1.5rem; padding: 0; margin: 0; list-style: none; }
 .artist-links a { display: inline-flex; align-items: center; min-height: 44px; }
 .artist-links li { display: flex; flex-wrap: wrap; align-items: center; column-gap: .6rem; }
-.spotify-artist-link { gap: .35rem; }
-.artist-links .spotify-artist-link { color: var(--muted); font-size: .875rem; }
-.artist-links .spotify-artist-link:hover { color: var(--accent); }
 #listen { scroll-margin-top: 1.25rem; }
-.spotify-tracks ul {
+.lineup-artists {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 315px), 1fr));
   gap: .8rem;
-  max-width: 1050px;
   margin: 0;
   padding: 0;
   list-style: none;
 }
-.spotify-tracks li { min-width: 0; max-width: 525px; border: 1px solid var(--line); border-radius: 4px; background: var(--panel); }
-.spotify-track { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; min-height: 46px; column-gap: .85rem; padding: .06rem .75rem; }
-.spotify-track h3 { padding-block: .38rem; font-size: 1.15rem; overflow-wrap: anywhere; }
-.spotify-track a { display: inline-flex; align-items: center; min-height: 44px; color: var(--muted); font-size: .875rem; }
-.spotify-track a:hover { color: var(--accent); }
-.spotify-tracks iframe { display: block; width: 100%; border: 0; border-radius: 0 0 3px 3px; background: #151515; }
+.artist-card { display: flex; flex-direction: column; min-width: 0; border: 1px solid var(--line); border-radius: 4px; background: var(--panel); }
+.artist-card-info { padding: .65rem .75rem .75rem; }
+.artist-card h3 { display: flex; align-items: center; min-height: 44px; font-size: 1.32rem; overflow-wrap: anywhere; }
+.artist-card h3 a { display: flex; align-items: center; min-height: inherit; }
+.artist-socials { display: flex; flex-wrap: wrap; gap: .3rem; }
+.artist-socials a { display: grid; place-items: center; width: 44px; height: 44px; border: 1px solid var(--line); border-radius: 3px; background: #141414; }
+.artist-socials a:hover { border-color: var(--accent); }
+.artist-socials svg { width: 20px; height: 20px; }
+.artist-card iframe { display: block; width: 100%; margin-top: auto; border: 0; border-radius: 0 0 3px 3px; background: #151515; }
 .venue-contact > a { display: inline-flex; align-items: center; min-height: 44px; overflow-wrap: anywhere; }
 .venue-contact h2:not(:first-child) { margin: 1.35rem 0 .35rem; }
 .venue-contact address { margin-top: .85rem; color: var(--muted); }
@@ -412,7 +438,7 @@ footer { background: #0c0c0c; border-top: 1px solid var(--line); }
   .wordmark img { width: 180px; }
   .date-tabs { width: 100%; }
   .show-card { grid-template-columns: auto minmax(0, 1fr) 145px; }
-  .show-card.has-flyer .show-visual { flex-direction: column; }
+  .more-shows-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
 @media (max-width: 640px) {
@@ -440,11 +466,10 @@ footer { background: #0c0c0c; border-top: 1px solid var(--line); }
   .stamp-month, .stamp-weekday { font-size: .75rem; letter-spacing: .04em; }
   .stamp-day { font-size: 2.85rem; }
   .show-info h3 { font-size: clamp(1.35rem, 6vw, 2.05rem); }
-  .card-listen { min-height: 44px; }
+  .card-link { min-height: 44px; }
   .lineup { font-size: .875rem; }
   .facts { gap: .15rem .7rem; }
   .show-card .actions { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(auto-fit, minmax(123px, 1fr)); }
-  .show-visual .flyer { width: 76px; min-height: 80px; }
   .calendar th { font-size: .75rem; letter-spacing: 0; }
   .calendar td { height: 66px; padding: .25rem 0; text-align: center; }
   .calendar-show { display: none; }
@@ -487,7 +512,8 @@ footer { background: #0c0c0c; border-top: 1px solid var(--line); }
       url("patio.webp") center 50% / cover no-repeat;
   }
   .detail-top.has-venue-photo .detail-info { width: 100%; }
-  .detail-visual .flyer { width: 100%; }
+  .detail-visual { width: min(100%, 325px); align-self: center; }
+  .more-shows-grid { grid-template-columns: minmax(0, 1fr); }
   .venue-panel { grid-template-columns: 1fr; }
   .venue-panel img { height: 255px; }
   .venue-intro img { min-height: 0; }
@@ -503,5 +529,5 @@ footer { background: #0c0c0c; border-top: 1px solid var(--line); }
 }
 
 @media (max-width: 365px) {
-  main:has(.spotify-tracks) { width: calc(100% - 1rem); }
+  main:has(.lineup-artists) { width: calc(100% - 1rem); }
 }
